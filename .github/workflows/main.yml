@@ -20,16 +20,52 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
 
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
-      with:
-        cache-disabled: true
+    - name: Download and Setup Gradle
+      run: |
+        wget https://services.gradle.org/distributions/gradle-8.8-bin.zip
+        unzip -q gradle-8.8-bin.zip
+        echo "$PWD/gradle-8.8/bin" >> $GITHUB_PATH
 
     - name: Build with Gradle
-      run: gradlew build
+      run: gradle build
 
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4
       with:
         name: fabric-mod
+        path: build/libs/*.jarname: Build Mod
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v5
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    - name: Download and Setup Gradle
+      run: |
+        wget https://services.gradle.org/distributions/gradle-8.8-bin.zip
+        unzip -q gradle-8.8-bin.zip
+        echo "$PWD/gradle-8.8/bin" >> $GITHUB_PATH
+
+    - name: Build with Gradle
+      run: gradle build
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: apex-mod
         path: build/libs/*.jar
