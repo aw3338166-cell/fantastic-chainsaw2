@@ -22,9 +22,9 @@ jobs:
 
       - name: Download and Setup Gradle
         run: |
-          wget https://services.gradle.org/distributions/gradle-8.8-bin.zip
-          unzip -q gradle-8.8-bin.zip
-          echo "$PWD/gradle-8.8/bin" >> $GITHUB_PATH
+          wget https://services.gradle.org/distributions/gradle-9.2.1-bin.zip
+          unzip -q gradle-9.2.1-bin.zip
+          echo "$PWD/gradle-9.2.1/bin" >> $GITHUB_PATH
 
       - name: Build with Gradle
         run: gradle build
